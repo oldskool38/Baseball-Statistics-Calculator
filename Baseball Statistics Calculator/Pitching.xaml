@@ -1,0 +1,20 @@
+﻿<Page
+	x:Class="BaseballStatisticsCalculator.Pitching"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="using:BaseballStatisticsCalculator"
+	mc:Ignorable="d"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Grid x:Name="grdMain">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="3*" />
+		</Grid.ColumnDefinitions>
+		<ListBox x:Name="lstPlayers" Grid.Column="0" SelectionChanged="LstPlayers_SelectionChanged" />
+		<Grid x:Name="grdStats" Grid.Column="1">
+			<Button x:Name="cmdUpdate" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" Content="Save" Click="CmdUpdate_Click" />
+		</Grid>
+	</Grid>
+</Page>
