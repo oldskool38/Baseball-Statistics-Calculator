@@ -14,7 +14,6 @@ namespace BaseballStatisticsCalculator
 	/// </summary>
 	public sealed partial class Offense : Page
 	{
-		private TextBlock [] lblStats = new TextBlock [36];
 		private TextBox [] txtStats = new TextBox [36];
 
 		/// <summary>
@@ -24,8 +23,7 @@ namespace BaseballStatisticsCalculator
 		{
 			InitializeComponent ();
 			double txtWidth = 0;
-			double lblWidth = 0;
-			string [] stat = new string [] { "Singles", "Doubles", "Triples", "At Bats", "Flyouts", "Batting Average", "Batting Avg. on Balls in Play", "Walks", "Walk Percentage", "Caught Stealing", "Groundouts", "Groundout to Flyout Ratio", "Hits", "Hit by Pitch", "Home Runs", "Home Run Percentage", "Intentional Walks", "Isolated Power", "On Base Percentage", "On Base Plus Slugging", "Plate Appearances", "Plate Appearances per Strikeout", "Runs Created", "Reached on Error", "Stolen Bases", "Stolen Base Attempts", "Stolen Base Percentage", "Sacrifice Fly", "Sacrifice Bunt", "Slugging Percentage", "Strikeouts", "Strikeout Percentage", "Total Bases", "Wins", "Losses", "Win Percentage" };
+			string [] stat = { "Singles", "Doubles", "Triples", "At Bats", "Flyouts", "Batting Average", "Batting Avg. on Balls in Play", "Walks", "Walk Percentage", "Caught Stealing", "Groundouts", "Groundout to Flyout Ratio", "Hits", "Hit by Pitch", "Home Runs", "Home Run Percentage", "Intentional Walks", "Isolated Power", "On Base Percentage", "On Base Plus Slugging", "Plate Appearances", "Plate Appearances per Strikeout", "Runs Created", "Reached on Error", "Stolen Bases", "Stolen Base Attempts", "Stolen Base Percentage", "Sacrifice Fly", "Sacrifice Bunt", "Slugging Percentage", "Strikeouts", "Strikeout Percentage", "Total Bases", "Wins", "Losses", "Win Percentage" };
 
 			// Get list of players
 			SqliteDataReader players = DataAccess.GetPlayers ();
@@ -54,22 +52,9 @@ namespace BaseballStatisticsCalculator
 				lstPlayers.Items.Add (lstPlayer [index++]);
 			}
 
-			// Initialize and format labels and text boxes
+			// Initialize and format text boxes
 			for (int count = 0; count < 36; count++)
 			{
-				lblStats [count] = new TextBlock
-				{
-					HorizontalAlignment = HorizontalAlignment.Left,
-					VerticalAlignment = VerticalAlignment.Top,
-					Text = stat [count]
-				};
-
-				// Find the maximum width of labels
-				if (lblStats [count].Width > lblWidth)
-				{
-					lblWidth = lblStats [count].Width;
-				}
-
 				txtStats [count] = new TextBox
 				{
 					HorizontalAlignment = HorizontalAlignment.Left,
@@ -85,66 +70,40 @@ namespace BaseballStatisticsCalculator
 			}
 
 			// Set calculated text boxes to read-only
+			txtStats [1].IsReadOnly = true;
 			txtStats [3].IsReadOnly = true;
 			txtStats [5].IsReadOnly = true;
-			txtStats [6].IsReadOnly = true;
-			txtStats [8].IsReadOnly = true;
-			txtStats [11].IsReadOnly = true;
+			txtStats [7].IsReadOnly = true;
+			txtStats [10].IsReadOnly = true;
+			txtStats [14].IsReadOnly = true;
 			txtStats [15].IsReadOnly = true;
-			txtStats [17].IsReadOnly = true;
+			txtStats [16].IsReadOnly = true;
 			txtStats [18].IsReadOnly = true;
-			txtStats [19].IsReadOnly = true;
 			txtStats [21].IsReadOnly = true;
-			txtStats [22].IsReadOnly = true;
-			txtStats [26].IsReadOnly = true;
+			txtStats [23].IsReadOnly = true;
+			txtStats [24].IsReadOnly = true;
+			txtStats [28].IsReadOnly = true;
 			txtStats [29].IsReadOnly = true;
-			txtStats [31].IsReadOnly = true;
 			txtStats [32].IsReadOnly = true;
-			txtStats [35].IsReadOnly = true;
 
-			// Set the width of the labels and text boxes
+			// Set the width of the text boxes
 			for (int count = 0; count < 36; count++)
 			{
-				lblStats [count].Width = lblWidth;
 				txtStats [count].Width = txtWidth;
 			}
 
-			// Reset the index variable
-			index = 0;
-
 			// Set the margin increment for the x axis
-			int xInc = ((int) Math.Round (lblWidth + txtWidth + 20.1499));
+			int xInc = ((int) Math.Round (txtWidth + 5));
 
 			// Set initial margin
-			int x = 10;
-			int y = 16;
-
-			// Position labels
-			while (index < 36)
-			{
-				Thickness margin = new Thickness (x, y, 0, 0);
-				lblStats [index++].Margin = margin;
-
-				// Increment margin
-				x = (x + xInc);
-				y = (y + 37);
-			}
-
-			// Reset the index variable
-			index = 0;
-
-			// Set the margin increment for the x axis
-			xInc = (int) Math.Round (lblWidth + txtWidth + 130.1499);
-
-			// Set initial margin
-			x = 120;
-			y = 10;
+			int x = 5;
+			int y = 5;
 
 			// Position text boxes
-			while (index < 36)
+			for (int count = 0; count < 36; count++)
 			{
 				Thickness margin = new Thickness (x, y, 0, 0);
-				txtStats [index++].Margin = margin;
+				txtStats [count].Margin = margin;
 
 				// Increment margin
 				x = (x + xInc);
@@ -160,11 +119,10 @@ namespace BaseballStatisticsCalculator
 			// Call get stats and pass the player's database ID
 			GetStats ((int) player.Tag);
 
-			// Add labels and text boxes to the grid
-			for (index = 0; index < 36; index++)
+			// Add text boxes to the grid
+			for (int count = 0; count < 36; count++)
 			{
-				grdStats.Children.Add (lblStats [index]);
-				grdStats.Children.Add (txtStats [index]);
+				grdStats.Children.Add (txtStats [count]);
 			}
 		}
 

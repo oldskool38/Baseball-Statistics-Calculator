@@ -14,7 +14,6 @@ namespace BaseballStatisticsCalculator
 	/// </summary>
 	public sealed partial class Pitching : Page
 	{
-		private TextBlock [] lblStats = new TextBlock [33];
 		private TextBox [] txtStats = new TextBox [33];
 
 		/// <summary>
@@ -24,8 +23,7 @@ namespace BaseballStatisticsCalculator
 		{
 			InitializeComponent ();
 			double txtWidth = 0;
-			double lblWidth = 0;
-			string [] stat = new string [] { "Walks", "Walk Percentage", "Earned Runs", "Earned Run Average", "Fly Ball", "Fly Ball Rate", "Ground Ball", "Ground Ball Percentage", "Games Started", "Hits", "Innings Per Start", "Innings Pitched", "Inherited Runners", "Inherited Runners Allowed", "Inherited Runners Allowed Percentage", "Strikeout to Walk Ratio", "Strikeout Rate", "Line Drives", "Line Drive Rate", "Pitch Count", "Plate Appearances", "Pitches per Inning Pitched", "Pop-ups", "Pop-up Rate", "Skill Interactive ERA", "Strikeouts", "Saves", "Save Opportunities", "Save Percentage", "Walks and Hits per Inning Pitched", "Wins", "Losses", "Win Percentage" };
+			string [] stat = { "Walks", "Walk Percentage", "Earned Runs", "Earned Run Average", "Fly Ball", "Fly Ball Rate", "Ground Ball", "Ground Ball Percentage", "Games Started", "Hits", "Innings Per Start", "Innings Pitched", "Inherited Runners", "Inherited Runners Allowed", "Inherited Runners Allowed Percentage", "Strikeout to Walk Ratio", "Strikeout Rate", "Line Drives", "Line Drive Rate", "Pitch Count", "Plate Appearances", "Pitches per Inning Pitched", "Pop-ups", "Pop-up Rate", "Skill Interactive ERA", "Strikeouts", "Saves", "Save Opportunities", "Save Percentage", "Walks and Hits per Inning Pitched", "Wins", "Losses", "Win Percentage" };
 
 			// Get list of players
 			SqliteDataReader players = DataAccess.GetPlayers ();
@@ -54,22 +52,9 @@ namespace BaseballStatisticsCalculator
 				lstPlayers.Items.Add (lstPlayer [index++]);
 			}
 
-			// Initialize and format labels and text boxes
+			// Initialize and format text boxes
 			for (int count = 0; count < 33; count++)
 			{
-				lblStats [count] = new TextBlock
-				{
-					HorizontalAlignment = HorizontalAlignment.Left,
-					VerticalAlignment = VerticalAlignment.Top,
-					Text = stat [count]
-				};
-
-				// Find the maximum width of labels
-				if (lblStats [count].Width > lblWidth)
-				{
-					lblWidth = lblStats [count].Width;
-				}
-
 				txtStats [count] = new TextBox
 				{
 					HorizontalAlignment = HorizontalAlignment.Left,
@@ -101,49 +86,24 @@ namespace BaseballStatisticsCalculator
 			txtStats [29].IsReadOnly = true;
 			txtStats [32].IsReadOnly = true;
 
-			// Set the width of the labels and text boxes
+			// Set the width of the text boxes
 			for (int count = 0; count < 33; count++)
 			{
-				lblStats [count].Width = lblWidth;
 				txtStats [count].Width = txtWidth;
 			}
 
-			// Reset the index variable
-			index = 0;
-
 			// Set the margin increment for the x axis
-			int xInc = ((int) Math.Round (lblWidth + txtWidth + 20.1499));
+			int xInc = ((int) Math.Round (txtWidth + 5));
 
 			// Set initial margin
-			int x = 10;
-			int y = 16;
-
-			// Position labels
-			while (index < 33)
-			{
-				Thickness margin = new Thickness (x, y, 0, 0);
-				lblStats [index++].Margin = margin;
-
-				// Increment margin
-				x = (x + xInc);
-				y = (y + 37);
-			}
-
-			// Reset the index variable
-			index = 0;
-
-			// Set the margin increment for the x axis
-			xInc = (int) Math.Round (lblWidth + txtWidth + 130.1499);
-
-			// Set initial margin
-			x = 120;
-			y = 10;
+			int x = 5;
+			int y = 5;
 
 			// Position text boxes
-			while (index < 33)
+			for (int count = 0; count < 33; count++)
 			{
 				Thickness margin = new Thickness (x, y, 0, 0);
-				txtStats [index++].Margin = margin;
+				txtStats [count].Margin = margin;
 
 				// Increment margin
 				x = (x + xInc);
@@ -159,11 +119,10 @@ namespace BaseballStatisticsCalculator
 			// Call get stats and pass the player's database ID
 			GetStats ((int) player.Tag);
 
-			// Add labels and text boxes to the grid
-			for (index = 0; index < 33; index++)
+			// Add text boxes to the grid
+			for (int count = 0; count < 33; count++)
 			{
-				grdStats.Children.Add (lblStats [index]);
-				grdStats.Children.Add (txtStats [index]);
+				grdStats.Children.Add (txtStats [count]);
 			}
 		}
 

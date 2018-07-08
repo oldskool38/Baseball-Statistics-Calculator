@@ -4,21 +4,21 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="using:BaseballStatisticsCalculator"
 	mc:Ignorable="d"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
 	<Grid x:Name="grdMain" SizeChanged="GrdMain_SizeChanged">
-		<SplitView x:Name="svMain" IsPaneOpen="True">
+		<SplitView x:Name="svMain" IsPaneOpen="True" DisplayMode="CompactOverlay">
 			<SplitView.Pane>
 				<Grid>
 					<Button x:Name="cmdToggle" VerticalAlignment="Top" Margin="10,10,0,0" Content="..." Click="CmdToggle_Click" />
-					<ListBox x:Name="lstNav" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="LstNav_SelectionChanged" Margin="0,47,0,0" SelectedIndex="0">
+					<ListBox x:Name="lstNav" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="LstNav_SelectionChanged" Margin="0,47,0,0">
 						<ListBox.Items>
-							<x:String>Add Players</x:String>
-							<x:String>Remove Players</x:String>
-							<x:String>Defense</x:String>
-							<x:String>Offense</x:String>
-							<x:String>Pitching</x:String>
+							<ListBoxItem Content="Add Players" />
+							<ListBoxItem Content="Remove Players" />
+							<ListBoxItem Content="Defense" />
+							<ListBoxItem Content="Offense" />
+							<ListBoxItem Content="Pitching" />
 						</ListBox.Items>
 					</ListBox>
 				</Grid>
